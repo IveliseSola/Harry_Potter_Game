@@ -14,17 +14,21 @@ h1 {
 
 /* fighters */
 
+.character{
+    margin-bottom: 50px;
+}
+
 .fighter {
     display: inline-block;
-    height: 150px;
+    height: 160px;
     width: 150px; 
-    margin-right: 10px;
-    background-color: rgb(114, 212, 114);
+    margin-right: 20px;
+    background-color: #bda116fa;
 }
 
 .fighter img {
-    height: 140px;
+    height: 130px;
     width: 140px;
-    margin-left: 5px;
+    /* margin-left: 5px; */
     margin-top: 5px;
 }

@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"> </script>
+    <script type="text/javascript" src="assets/javascript/game.js"> </script>
     <title>Hogwarts Game</title>
 </head>
 
@@ -15,23 +17,25 @@
     <h1 class="welcome">Welcome to Hogwarts Game</h1>
 
     <section class="character">
-        <div class="fighter" id="gryffindor"> <img src="assets/images/gryffindor-logo.jpeg" alt="Gryffindor Logo"> </div>
-        <div class="fighter" id="slytherin"> <img src="assets/images/slytherin-logo.jpeg" alt="Slytherin Logo"> </div>
-        <div class="fighter" id="hufflepuff"> <img src="assets/images/hufflepuff-logo.jpeg" alt="Hufflepuff Logo"> </div>
-        <div class="fighter" id="ravenclaw"> <img src="assets/images/ravenclaw-logo.jpeg" alt="Ravenclaw Logo"> </div>
-        <p>Your Character</p>
+        <p>Characteres</p>
+        <div class="fighter" id="gryffindor">
+            <img src="assets/images/gryffindor-logo.jpeg" alt="Gryffindor Logo"> </div>
+        <div class="fighter" id="slytherin">
+            <img src="assets/images/slytherin-logo.jpeg" alt="Slytherin Logo"> </div>
+        <div class="fighter" id="hufflepuff">
+            <img src="assets/images/hufflepuff-logo.jpeg" alt="Hufflepuff Logo"> </div>
+        <div class="fighter" id="ravenclaw">
+            <img src="assets/images/ravenclaw-logo.jpeg" alt="Ravenclaw Logo"> </div>
     </section>
-    <section class="enemies"> Enemies available to attack
-
+    <section class="your-fighter">
+        <p>Your Fighter</p>
     </section>
+    <section class="defender"> <p>Defender</p> </section>
     <section class="fight"> Fight Section
         <div class="defender-area"></div>
     </section>
 
-
-
-
-    <link type="text/javascript" href="assets/javascript/game.js">
+    </script>
 </body>
 
 </html>
