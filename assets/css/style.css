@@ -1,0 +1,30 @@
+
+body {
+    background-image: url(../images/bgHarryPotter.jpg);
+    background-size: cover;
+    color: #ffffff;
+}
+
+/* Headings */
+
+h1 {
+    text-align: center;
+    color: #bda116fa;
+}
+
+/* fighters */
+
+.fighter {
+    display: inline-block;
+    height: 150px;
+    width: 150px; 
+    margin-right: 10px;
+    background-color: rgb(114, 212, 114);
+}
+
+.fighter img {
+    height: 140px;
+    width: 140px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
