@@ -1,4 +1,6 @@
 
+/* Body */
+
 body {
     background-image: url(../images/bgHarryPotter.jpg);
     background-size: cover;
@@ -12,7 +14,7 @@ h1 {
     color: #bda116fa;
 }
 
-/* fighters */
+/* Fighters */
 
 .character{
     margin-bottom: 50px;
@@ -22,7 +24,7 @@ h1 {
     display: inline-block;
     height: 160px;
     width: 150px; 
-    margin-right: 20px;
+    margin-right: 40px;
     background-color: #bda116fa;
 }
 
@@ -32,3 +34,19 @@ h1 {
     /* margin-left: 5px; */
     margin-top: 5px;
 }
+
+.fighter p {
+    margin-top: 0;
+}
+
+/* Buttons */
+
+.attack-btn,
+.restart-btn {
+    color: #bda116fa;
+    height: auto;
+    width: auto;
+    font-size: 15px;
+}
+
+.attack-btn{ margin-top: 10px; }
