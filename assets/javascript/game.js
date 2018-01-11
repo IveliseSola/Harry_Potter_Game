@@ -4,10 +4,11 @@ $(document).ready(function () {
     var myFighterId = 0;
     var myDefenderId = 0;
     var count = 0;
-    // var aux = 0;
     var myDivFighter;
     var myDivDefender;
     var newPowerAttack = 0;
+    var f = returnObj(fighters, myFighterId);
+    var d = returnObj(fighters, myDefenderId);
 
     function Fighter(name, id, healthPoints, attackPower, counterAtackPower) {
         this.name = name;
@@ -16,8 +17,6 @@ $(document).ready(function () {
         this.attackPower = attackPower;
         this.counterAtackPower = counterAtackPower;
     }
-
-    alert("loaded");
 
     var gryffindor = new Fighter("Gryffindor", 1, 150, 20, 0);
     var slytherin = new Fighter("Slythering", 2, 180, 25, 0);
@@ -68,44 +67,44 @@ $(document).ready(function () {
 
     $(".attack-btn").on("click", function () {
         if (myBool) {
-            var f = returnObj(fighters, myFighterId);
-            var d = returnObj(fighters, myDefenderId);
-            f.healthPoints = f.healthPoints - d.attackPower;
-            d.healthPoints = d.healthPoints - f.attackPower;
-            if ((f.healthPoints >= 0) && (d.healthPoints >= 0)) {
+            // var f = returnObj(fighters, myFighterId);
+            // var d = returnObj(fighters, myDefenderId);
+            if (d.healthPoints <= 0 || f.healthPoints <= 0) {
+                if (f.healthPoints === 0) {
+                    $(".player-message").text("You have been defeated… Game Over!!!");
+                    $('.attack-btn').attr('disabled', 'disabled');
+                    var newBtn = $("<button>");
+                    newBtn.attr("class", "restart-btn");
+                    newBtn.text("Play Again!");
+                    $(".player-options").append(newBtn);
+                    $(".defender-damage").remove();
+                    $(".defender-power-attack").remove();
+                } else if (defenders.length > 1) {
+                    for (var i = 0; i < defenders.length; i++) {
+                        if (d.name == defenders[i]) {
+                            defenders.splice(defenders[i], 1);
+                        }
+                    }
+                    myDivDefender.remove();
+                    $(".defender-damage").remove();
+                    $(".defender-power-attack").remove();
+                    $(".player-message").text("You have defeated " + d.name + " you can use your Sectumsempra to fight another enemy.");
+                    myBool = false;
+                } else {
+                    $(".player-message").text("You Won!");
+                    myDivDefender.remove();
+                    $(".player-options").append(newBtn);
+                }
+            } else {
+                newPowerAttack += f.attackPower;
+                f.healthPoints = f.healthPoints - d.attackPower;
+                d.healthPoints = d.healthPoints - newPowerAttack;
                 myDivFighter.children("p:first").remove();
                 myDivFighter.append("<p>" + f.healthPoints + "</p>");
                 myDivDefender.children("p:first").remove();
                 myDivDefender.append("<p>" + d.healthPoints + "</p>");
-                newPowerAttack += f.attackPower;
-                f.attackPower = newPowerAttack;
                 $(".defender-damage").text(" You attacked " + d.name + " for " + newPowerAttack + " damage");
                 $(".defender-power-attack").text(d.name + " attacked you back for " + d.attackPower + " damage");
-            } else if (f.healthPoints === 0) {
-                $(".player-message").text("You have been defeated… Game Over!!!");
-                $('.attack-btn').attr('disabled', 'disabled');
-                var newBtn = $("<button>");
-                newBtn.attr("class", "restart-btn");
-                newBtn.text("Play Again!");
-                $(".player-options").append(newBtn);
-                $(".defender-damage").remove();
-                $(".defender-power-attack").remove();
-            } else if (defenders.length > 1) {
-                for (var i = 0; i < defenders.length; i++) {
-                    if (d.name == defenders[i]) {
-                        defenders.splice(defenders[i], 1);
-                    }
-                }
-                myDivDefender.remove();
-                $(".defender-damage").remove();
-                $(".defender-power-attack").remove();
-                $(".player-message").text("You have defeated " + d.name + " you can use your Sectumsempra to fight another enemy.");
-                // f.attackPower = newPowerAttack;
-                myBool = false;
-            } else {
-                $(".player-message").text("You Won!");
-                myDivDefender.remove();
-                $(".player-options").append(newBtn);
             }
         } else {
             $(".defender").html("<p>You need to choose a fighter and an opponent first</p>");
@@ -121,29 +120,15 @@ $(document).ready(function () {
     }
 
 
-  
-  $(".player-options").on("click", ".restart-btn", function(){
-      window.location.reload();
-  })
-    
+
+    $(".player-options").on("click", ".restart-btn", function () {
+        window.location.reload();
+    })
+
     // $(".restart-btn").on("click", function () {
     //    window.location.reload();
     // });
 
     $(".player-options").append("<button class='restart-btn'>Restart</button");
 
-
-   
-
-
-
-    // function remove(firstParameter, secondParameter) {
-    //     return firstParameter.filter(e => e !== secondParameter);
-    // }
-
-    // function defenderList(parameter){
-    //     for(var i = 0; i < parameter.length; i++){
-    //      $("#enemies").append("#parameter");
-    // }
-    //}
 });
