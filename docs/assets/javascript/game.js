@@ -3,8 +3,8 @@ $(document).ready(function () {
     var myBool = false;
     var myFighterId = 0;
     var myDefenderId = 0;
-    var aux = 0;
     var count = 0;
+    // var aux = 0;
     var myDivFighter;
     var myDivDefender;
     var newPowerAttack = 0;
@@ -23,7 +23,7 @@ $(document).ready(function () {
     var hufflepuff = new Fighter("Hufflepuff", 4, 100, 5, 0);
 
     var fighters = [gryffindor, slytherin, ravenclaw, hufflepuff];
-    // var defenders = ["Gryffindor", "Slythering", "Ravenclaw", "Hufflepuff"];
+    var defenders = ["Gryffindor", "Slythering", "Ravenclaw", "Hufflepuff"];
 
     $("#1").append("<p>" + gryffindor.healthPoints + "</p>");
     $("#1").css({ "text-align": "center" });
@@ -71,55 +71,52 @@ $(document).ready(function () {
             newPowerAttack += f.attackPower;
             f.healthPoints = f.healthPoints - d.attackPower;
             d.healthPoints = d.healthPoints - newPowerAttack;
-            myDivFighter.children("p:first").remove();
-            myDivFighter.append("<p>" + f.healthPoints + "</p>");
-            myDivDefender.children("p:first").remove();
-            myDivDefender.append("<p>" + d.healthPoints + "</p>");
-            $(".defender-damage").text(" You attacked " + d.name + " for " + newPowerAttack + " damage");
-            $(".defender-power-attack").text(d.name + " attacked you back for " + d.attackPower + " damage");
-            if (d.healthPoints <= 0 || f.healthPoints <= 0) {
-                if (f.healthPoints <= 0) {
-                    $(".player-message").text("You have been defeated… Game Over!!!");
-                    $('.attack-btn').attr('disabled', 'disabled');
-                    var newBtn = $("<button>");
-                    newBtn.attr("class", "restart-btn");
-                    newBtn.text("Play Again!");
-                    $(".player-options").append(newBtn);
-                    $(".defender-damage").remove();
-                    $(".defender-power-attack").remove();
-                } else if (d.healthPoints <= 0 && aux < 3) {
-                    // for (var i = 0; i < defenders.length; i++) {
-                    //     if (d.name == defenders[i]) {
-                    //         defenders.splice(defenders[i], 1);
-                    //     }
-                    // }
-                    myDivDefender.remove();
-                    $(".defender-damage").remove();
-                    $(".defender-power-attack").remove();
-                    $(".player-message").text("You have defeated " + d.name + " you can use your Sectumsempra to fight another enemy.");
+            if ((f.healthPoints > 0) && (d.healthPoints > 0)){
+                myDivFighter.children("p:first").remove();
+                myDivFighter.append("<p>" + f.healthPoints + "</p>");
+                myDivDefender.children("p:first").remove();
+                myDivDefender.append("<p>" + d.healthPoints + "</p>");
+                $(".defender-damage").html("<p> You attacked " + d.name + " for " + newPowerAttack + " damage </p>");
+                $(".defender-power-attack").html("<p> " + d.name + " attacked you back for " + d.attackPower + " damage </p>");
+            } else if (d.healthPoints <= 0) {
+                if (defenders.length > 1) {
+                    //(aux < 3)
+                    // aux++;
+                    for (var i = 0; i < defenders.length; i++) {
+                        if (d.name == defenders[i]) {
+                            defenders.splice(defenders[i], 1);
+                        }
+                    }
+                    $(".defender-damage").children("p:first").detach();
+                    $(".defender-power-attack").children("p:first").detach();
+                    $(".player-message").html(" <p> You have defeated " + d.name + " you can use your <b> Sectumsempra </b> to fight another enemy. </p>");
                     myBool = false;
-                    aux++;
-                } else {
-                    $(".player-message").text("You Won!");
-                    myDivDefender.remove();
-                    $(".player-options").append(newBtn);
+                    myDivDefender.detach();
                 }
-             } 
-            //else {
-            //     // newPowerAttack += f.attackPower;
-            //     // f.healthPoints = f.healthPoints - d.attackPower;
-            //     // d.healthPoints = d.healthPoints - newPowerAttack;
-            //     // myDivFighter.children("p:first").remove();
-            //     // myDivFighter.append("<p>" + f.healthPoints + "</p>");
-            //     // myDivDefender.children("p:first").remove();
-            //     // myDivDefender.append("<p>" + d.healthPoints + "</p>");
-            //     // $(".defender-damage").text(" You attacked " + d.name + " for " + newPowerAttack + " damage");
-            //     // $(".defender-power-attack").text(d.name + " attacked you back for " + d.attackPower + " damage");
-            // }
+                else {
+                    $(".player-message").html("<p> You Won! </p>");
+                    $(".player-options").append(newBtn);
+                    $(".enemies").detach();
+                    $(".attack-btn").detach();
+                    myDivDefender.detach();
+                }
+            } else {
+                //f.healthPoints <= 0
+                $(".player-message").text("You have been defeated… Game Over!!!");
+                $(".attack-btn").attr("disabled", "disabled");
+                var newBtn = $("<button>");
+                newBtn.attr("class", "restart-btn");
+                newBtn.text("Play Again!");
+                $(".player-options").append(newBtn);
+                $(".defender-damage").children("p:first").empty();
+                $(".defender-power-attack").children("p:first").empty();
+            }
         } else {
             $(".defender").html("<p>You need to choose a fighter and an opponent first</p>");
         }
     });
+
+    // Get an Obj
 
     function returnObj(firstParameter, secondParameter) {
         for (var i = 0; i < firstParameter.length; i++) {
@@ -128,6 +125,8 @@ $(document).ready(function () {
             }
         }
     }
+
+    // Reload the page
 
     $(".player-options").on("click", ".restart-btn", function () {
         window.location.reload();
