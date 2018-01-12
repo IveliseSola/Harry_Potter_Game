@@ -23,7 +23,7 @@ $(document).ready(function () {
     var hufflepuff = new Fighter("Hufflepuff", 4, 100, 5, 0);
 
     var fighters = [gryffindor, slytherin, ravenclaw, hufflepuff];
-    var defenders = ["Gryffindor", "Slythering", "Ravenclaw", "Hufflepuff"];
+    // var defenders = ["Gryffindor", "Slythering", "Ravenclaw", "Hufflepuff"];
 
     $("#1").append("<p>" + gryffindor.healthPoints + "</p>");
     $("#1").css({ "text-align": "center" });
@@ -68,6 +68,15 @@ $(document).ready(function () {
         if (myBool) {
             var f = returnObj(fighters, myFighterId);
             var d = returnObj(fighters, myDefenderId);
+            newPowerAttack += f.attackPower;
+            f.healthPoints = f.healthPoints - d.attackPower;
+            d.healthPoints = d.healthPoints - newPowerAttack;
+            myDivFighter.children("p:first").remove();
+            myDivFighter.append("<p>" + f.healthPoints + "</p>");
+            myDivDefender.children("p:first").remove();
+            myDivDefender.append("<p>" + d.healthPoints + "</p>");
+            $(".defender-damage").text(" You attacked " + d.name + " for " + newPowerAttack + " damage");
+            $(".defender-power-attack").text(d.name + " attacked you back for " + d.attackPower + " damage");
             if (d.healthPoints <= 0 || f.healthPoints <= 0) {
                 if (f.healthPoints <= 0) {
                     $(".player-message").text("You have been defeated… Game Over!!!");
@@ -78,11 +87,7 @@ $(document).ready(function () {
                     $(".player-options").append(newBtn);
                     $(".defender-damage").remove();
                     $(".defender-power-attack").remove();
-                } else if (d.healthPoints <= 0 && aux === 3) {
-                    $(".player-message").text("You Won!");
-                    myDivDefender.remove();
-                    $(".player-options").append(newBtn);
-                } else {
+                } else if (d.healthPoints <= 0 && aux < 3) {
                     // for (var i = 0; i < defenders.length; i++) {
                     //     if (d.name == defenders[i]) {
                     //         defenders.splice(defenders[i], 1);
@@ -94,18 +99,23 @@ $(document).ready(function () {
                     $(".player-message").text("You have defeated " + d.name + " you can use your Sectumsempra to fight another enemy.");
                     myBool = false;
                     aux++;
+                } else {
+                    $(".player-message").text("You Won!");
+                    myDivDefender.remove();
+                    $(".player-options").append(newBtn);
                 }
-            } else {
-                newPowerAttack += f.attackPower;
-                f.healthPoints = f.healthPoints - d.attackPower;
-                d.healthPoints = d.healthPoints - newPowerAttack;
-                myDivFighter.children("p:first").remove();
-                myDivFighter.append("<p>" + f.healthPoints + "</p>");
-                myDivDefender.children("p:first").remove();
-                myDivDefender.append("<p>" + d.healthPoints + "</p>");
-                $(".defender-damage").text(" You attacked " + d.name + " for " + newPowerAttack + " damage");
-                $(".defender-power-attack").text(d.name + " attacked you back for " + d.attackPower + " damage");
-            }
+             } 
+            //else {
+            //     // newPowerAttack += f.attackPower;
+            //     // f.healthPoints = f.healthPoints - d.attackPower;
+            //     // d.healthPoints = d.healthPoints - newPowerAttack;
+            //     // myDivFighter.children("p:first").remove();
+            //     // myDivFighter.append("<p>" + f.healthPoints + "</p>");
+            //     // myDivDefender.children("p:first").remove();
+            //     // myDivDefender.append("<p>" + d.healthPoints + "</p>");
+            //     // $(".defender-damage").text(" You attacked " + d.name + " for " + newPowerAttack + " damage");
+            //     // $(".defender-power-attack").text(d.name + " attacked you back for " + d.attackPower + " damage");
+            // }
         } else {
             $(".defender").html("<p>You need to choose a fighter and an opponent first</p>");
         }
@@ -123,6 +133,6 @@ $(document).ready(function () {
         window.location.reload();
     });
 
-    $(".player-options").append("<button class='restart-btn'>Restart</button");
+    // $(".player-options").append("<button class='restart-btn'>Restart</button");
 
 });
